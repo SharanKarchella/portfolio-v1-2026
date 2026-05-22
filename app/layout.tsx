@@ -8,7 +8,7 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const siteUrl = "https://portfolio-v1-2026-jade.vercel.app";
+const siteUrl = "https://sharan.it.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
