@@ -1,19 +1,65 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const siteUrl = "https://portfolio-v1-2026-jade.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Sharan Karchella — Full-Stack Developer",
-  description: "Full-stack developer building AI-powered tools, browser extensions, and whatever problem needs solving next.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Sharan Karchella — Full-Stack Developer",
+    template: "%s | Sharan Karchella",
+  },
+  description:
+    "Full-stack developer building AI agents, browser extensions, and real-world products. Passionate about shipping things that matter.",
+  keywords: [
+    "Sharan Karchella",
+    "full-stack developer",
+    "AI agents",
+    "Chrome extensions",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "portfolio",
+  ],
+  authors: [{ name: "Sharan Karchella", url: siteUrl }],
+  creator: "Sharan Karchella",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "Sharan Karchella",
     title: "Sharan Karchella — Full-Stack Developer",
-    description: "Full-stack developer building AI-powered tools, browser extensions, and whatever problem needs solving next.",
+    description:
+      "Full-stack developer building AI agents, browser extensions, and real-world products.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sharan Karchella — Full-Stack Developer",
+    description:
+      "Full-stack developer building AI agents, browser extensions, and real-world products.",
+    creator: "@SharanKarchella",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="noise grid-bg antialiased">
+    <html lang="en" className={`dark ${inter.variable}`}>
+      <body className="noise grid-bg antialiased font-sans">
         <div className="orb orb-purple" />
         <div className="orb orb-blue" />
         <div className="orb orb-cyan" />
