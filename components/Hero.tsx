@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -13,8 +14,14 @@ export default function Hero() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="mb-8"
       >
-        <div style={{ width: '8rem', height: '8rem', borderRadius: '9999px', border: '2px solid rgba(168,85,247,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 800, background: 'rgba(255,255,255,0.05)', margin: '0 auto', boxShadow: '0 0 40px rgba(168,85,247,0.2)' }} className="text-gradient">
-          SK
+        <div style={{ width: '8rem', height: '8rem', borderRadius: '9999px', border: '2px solid rgba(168,85,247,0.5)', overflow: 'hidden', margin: '0 auto', boxShadow: '0 0 40px rgba(168,85,247,0.2)', position: 'relative' }}>
+          <Image
+            src="/avatar.jpg"
+            alt="Sharan Karchella"
+            fill
+            style={{ objectFit: 'cover', objectPosition: '10% 28%' }}
+            priority
+          />
         </div>
         <motion.div
           initial={{ opacity: 0 }}
