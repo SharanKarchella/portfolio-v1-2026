@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const links = [
   { label: "About", href: "#about" },
@@ -15,29 +14,26 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass border-b border-white/8 py-3" : "py-5"
+    <nav
+      className={`fx-fade-down fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "glass border-b border-white/[0.08] py-3" : "py-5"
       }`}
     >
-      <div style={{ maxWidth: '72rem', marginLeft: 'auto', marginRight: 'auto', padding: '0 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <a href="#" className="text-gradient font-bold text-xl tracking-tight">
+      <div className="container-xl flex items-center justify-between px-6">
+        <a href="#" className="text-gradient text-xl font-bold tracking-tight">
           SK
         </a>
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm text-slate-400 hover:text-white transition-colors duration-200 hover:text-gradient"
+                className="text-sm text-slate-400 transition-colors hover:text-white"
               >
                 {l.label}
               </a>
@@ -48,11 +44,11 @@ export default function Navbar() {
           href="https://www.linkedin.com/in/sharan-karchella/"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ fontSize: '0.875rem', padding: '0.5rem 1.25rem', borderRadius: '9999px', border: '1px solid rgba(168,85,247,0.4)', color: '#c084fc', textDecoration: 'none', display: 'inline-block' }}
+          className="btn btn-outline px-5 py-2 text-sm"
         >
           Hire me
         </a>
       </div>
-    </motion.nav>
+    </nav>
   );
 }

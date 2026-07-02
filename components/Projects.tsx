@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useReveal } from "@/lib/useReveal";
+import { GithubIcon } from "@/components/icons";
 
 const projects = [
   {
@@ -43,54 +42,37 @@ const projects = [
   },
 ];
 
-function ProjectCard({ project, i }: { project: typeof projects[0]; i: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: number }) {
+  const { ref, shown } = useReveal<HTMLDivElement>("-60px");
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: i * 0.1, duration: 0.7 }}
-      whileHover={{ y: -6 }}
-      style={{
-        background: 'rgba(255,255,255,0.04)',
-        border: project.featured ? '1px solid rgba(168,85,247,0.25)' : '1px solid rgba(255,255,255,0.06)',
-        borderRadius: '1.5rem',
-        overflow: 'hidden',
-        backdropFilter: 'blur(12px)',
-        display: 'flex',
-        flexDirection: 'column',
-        boxShadow: project.featured ? '0 0 40px rgba(168,85,247,0.1)' : 'none',
-      }}
+      className={`card-reveal glass flex flex-col overflow-hidden rounded-3xl ${
+        project.featured
+          ? "border-purple-500/25 shadow-[0_0_40px_rgba(168,85,247,0.1)]"
+          : "border-white/[0.06]"
+      } ${shown ? "show" : ""}`}
+      style={{ transitionDelay: `${i * 0.1}s` }}
     >
-      {/* Top gradient bar */}
-      <div style={{ height: '3px', background: project.accent }} />
+      <div className="h-[3px]" style={{ background: project.accent }} />
 
-      <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          <span style={{ fontSize: '2.25rem' }}>{project.emoji}</span>
+      <div className="flex flex-1 flex-col p-7">
+        <div className="mb-4 flex items-start justify-between">
+          <span className="text-4xl">{project.emoji}</span>
           {project.featured && (
-            <span style={{ fontSize: '0.7rem', padding: '0.25rem 0.625rem', borderRadius: '9999px', background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.25)', color: '#c084fc', fontWeight: 500 }}>
+            <span className="rounded-full border border-purple-500/25 bg-purple-500/10 px-2.5 py-1 text-[0.7rem] font-medium text-purple-400">
               Featured
             </span>
           )}
         </div>
 
-        <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'white', marginBottom: '0.75rem' }}>
-          {project.title}
-        </h3>
-        <p style={{ fontSize: '0.875rem', color: '#94a3b8', lineHeight: 1.7, marginBottom: '1.25rem', flex: 1 }}>
-          {project.description}
-        </p>
+        <h3 className="mb-3 text-lg font-bold text-white">{project.title}</h3>
+        <p className="mb-5 flex-1 text-sm leading-relaxed text-slate-400">{project.description}</p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+        <div className="mb-6 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <span
-              key={tag}
-              style={{ fontSize: '0.7rem', padding: '0.25rem 0.625rem', borderRadius: '9999px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8' }}
-            >
+            <span key={tag} className="tag tag-sm">
               {tag}
             </span>
           ))}
@@ -100,60 +82,50 @@ function ProjectCard({ project, i }: { project: typeof projects[0]; i: number })
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#94a3b8', textDecoration: 'none' }}
+          className="inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-white"
         >
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-          </svg>
+          <GithubIcon className="shrink-0" />
           View on GitHub →
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function Projects() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { ref, shown } = useReveal<HTMLElement>();
 
   return (
-    <section id="projects" ref={ref} className="w-full py-32 px-6 relative z-10">
-      <div style={{ maxWidth: '72rem', marginLeft: 'auto', marginRight: 'auto', width: '100%' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
-        >
-          <p className="text-purple-400 text-sm font-semibold tracking-widest uppercase mb-4">
+    <section id="projects" ref={ref} className="w-full px-6 py-32">
+      <div className="container-xl">
+        <div className={`reveal mb-16 text-center ${shown ? "show" : ""}`}>
+          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-purple-400">
             Portfolio
           </p>
-          <h2 className="text-4xl md:text-5xl font-black text-white">
+          <h2 className="text-4xl font-black text-white md:text-5xl">
             Things I&apos;ve <span className="text-gradient">shipped</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+        <div className="grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
           {projects.map((p, i) => (
             <ProjectCard key={p.title} project={p} i={i} />
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          style={{ textAlign: 'center', marginTop: '2.5rem' }}
+        <div
+          className={`reveal mt-10 text-center ${shown ? "show" : ""}`}
+          style={{ transitionDelay: "0.6s" }}
         >
           <a
             href="https://github.com/SharanKarchella"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: '#94a3b8', fontSize: '0.875rem', textDecoration: 'none' }}
+            className="text-sm text-slate-400 transition-colors hover:text-white"
           >
             See all projects on GitHub →
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

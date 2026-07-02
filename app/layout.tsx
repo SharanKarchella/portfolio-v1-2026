@@ -59,7 +59,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`dark ${inter.variable}`}>
-      <body className="noise grid-bg antialiased font-sans">
+      <body className="grid-bg antialiased font-sans">
+        <noscript>
+          <style>{`.reveal,.icon-reveal,.card-reveal,.social-reveal{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <div className="orb orb-purple" />
         <div className="orb orb-blue" />
         <div className="orb orb-cyan" />

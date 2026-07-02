@@ -19,71 +19,107 @@
 
 html {
   scroll-behavior: smooth;
-  width: 100%;
 }
 
 body {
-  width: 100%;
   background-color: var(--bg);
   color: #e2e8f0;
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
 
-/* Reliable centering containers */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--purple);
+  border-radius: 2px;
+}
+
+/* ---- Layout ---- */
 .container-xl {
   width: 100%;
   max-width: 72rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
 }
-
 .container-md {
   width: 100%;
   max-width: 48rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #050508; }
-::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 2px; }
+section {
+  position: relative;
+  z-index: 1;
+}
 
-/* Glow utilities */
-.glow-purple {
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.15);
-}
-.glow-blue {
-  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
-}
+/* ---- Surfaces & text ---- */
 .text-gradient {
-  background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4);
+  background: linear-gradient(135deg, var(--purple), var(--blue), var(--cyan));
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Glass card */
 .glass {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface);
+  border: 1px solid var(--border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* Noise texture overlay */
-.noise::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: linear-gradient(to right, #9333ea, #2563eb);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+}
+.btn-ghost {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-weight: 600;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.btn-outline {
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #c084fc;
 }
 
-/* Grid background */
+/* ---- Tags ---- */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+.tag-sm {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+/* ---- Background effects ---- */
 .grid-bg {
   background-image:
     linear-gradient(rgba(168, 85, 247, 0.04) 1px, transparent 1px),
@@ -91,7 +127,6 @@ body {
   background-size: 60px 60px;
 }
 
-/* Glow orbs */
 .orb {
   position: fixed;
   border-radius: 50%;
@@ -122,7 +157,111 @@ body {
   transform: translate(-50%, -50%);
 }
 
-section {
-  position: relative;
-  z-index: 1;
+/* ---- Entrance animations (play on load) ---- */
+@keyframes fx-fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fx-fade-down {
+  from { opacity: 0; transform: translateY(-80px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fx-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fx-pop {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.fx-fade-up,
+.fx-fade-down,
+.fx-fade-in,
+.fx-pop {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+}
+.fx-fade-up { animation-name: fx-fade-up; }
+.fx-fade-down { animation-name: fx-fade-down; }
+.fx-fade-in { animation-name: fx-fade-in; }
+.fx-pop { animation-name: fx-pop; }
+.bob { animation: bob 1.5s ease-in-out infinite; }
+.status-dot { animation: status-pulse 2s ease-in-out infinite; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.type-caret {
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+
+/* ---- Scroll reveals (toggled by useReveal) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.icon-reveal {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.35s ease;
+}
+.card-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.55s ease, transform 0.35s ease;
+}
+.social-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.35s ease;
+}
+.reveal.show,
+.icon-reveal.show,
+.card-reveal.show,
+.social-reveal.show {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover lifts (apply only once revealed) */
+.icon-reveal.show:hover {
+  transform: translateY(-4px) scale(1.08);
+}
+.card-reveal.show:hover {
+  transform: translateY(-6px);
+}
+.social-reveal.show:hover {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .icon-reveal,
+  .card-reveal,
+  .social-reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

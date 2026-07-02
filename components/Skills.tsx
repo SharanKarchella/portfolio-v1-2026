@@ -1,8 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useReveal } from "@/lib/useReveal";
 
 const skills = [
   { name: "TypeScript", color: "#3178C6", icon: "TS" },
@@ -26,69 +24,58 @@ const categories = [
 ];
 
 export default function Skills() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { ref, shown } = useReveal<HTMLElement>();
 
   return (
-    <section id="skills" ref={ref} className="w-full py-32 px-6 relative z-10">
-      <div style={{ maxWidth: '72rem', marginLeft: 'auto', marginRight: 'auto', width: '100%' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
-        >
-          <p className="text-purple-400 text-sm font-semibold tracking-widest uppercase mb-4">
+    <section id="skills" ref={ref} className="w-full px-6 py-32">
+      <div className="container-xl">
+        <div className={`reveal mb-16 text-center ${shown ? "show" : ""}`}>
+          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-purple-400">
             Tech stack
           </p>
-          <h2 className="text-4xl md:text-5xl font-black text-white">
+          <h2 className="text-4xl font-black text-white md:text-5xl">
             Tools I <span className="text-gradient">work with</span>
           </h2>
-        </motion.div>
+        </div>
 
-        {/* Category cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {categories.map((cat, i) => (
-            <motion.div
+            <div
               key={cat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 * i, duration: 0.6 }}
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(168,85,247,0.15)', borderRadius: '1rem', padding: '1.5rem', backdropFilter: 'blur(12px)' }}
+              className={`reveal glass rounded-2xl border-purple-500/15 p-6 ${shown ? "show" : ""}`}
+              style={{ transitionDelay: `${0.1 * i}s` }}
             >
-              <p style={{ fontSize: '0.7rem', color: '#a855f7', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-purple-500">
                 {cat.label}
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div className="flex flex-wrap gap-2">
                 {cat.items.map((item) => (
-                  <span
-                    key={item}
-                    style={{ padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 500, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#cbd5e1' }}
-                  >
+                  <span key={item} className="tag">
                     {item}
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Skill icons grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))', gap: '1rem' }}>
+        <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(90px,1fr))]">
           {skills.map((skill, i) => (
-            <motion.div
+            <div
               key={skill.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.05 * i, duration: 0.4 }}
-              whileHover={{ scale: 1.08, y: -4 }}
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '1rem', padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'default', backdropFilter: 'blur(12px)' }}
+              className={`icon-reveal glass flex flex-col items-center gap-2 rounded-2xl p-4 ${shown ? "show" : ""}`}
+              style={{ transitionDelay: `${0.05 * i}s` }}
             >
-              <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: '0.75rem', background: skill.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.7rem', fontWeight: 700 }}>
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-[0.7rem] font-bold text-white"
+                style={{ background: skill.color }}
+              >
                 {skill.icon}
               </div>
-              <span style={{ fontSize: '0.7rem', color: '#94a3b8', textAlign: 'center', lineHeight: 1.3 }}>{skill.name}</span>
-            </motion.div>
+              <span className="text-center text-[0.7rem] leading-tight text-slate-400">
+                {skill.name}
+              </span>
+            </div>
           ))}
         </div>
       </div>
