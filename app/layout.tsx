@@ -1,6 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#050508",
+};
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,6 +40,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true },
+  },
+  // Site ships its own dark theme — stop Dark Reader from recoloring it
+  other: {
+    "darkreader-lock": "true",
   },
   alternates: {
     canonical: siteUrl,

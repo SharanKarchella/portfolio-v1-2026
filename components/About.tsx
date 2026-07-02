@@ -12,10 +12,10 @@ export default function About() {
   const { ref, shown } = useReveal<HTMLElement>();
 
   return (
-    <section id="about" ref={ref} className="w-full px-6 py-32">
+    <section id="about" ref={ref} className="w-full px-6 py-20 md:py-32">
       <div className="container-xl">
         <div
-          className={`reveal grid grid-cols-1 items-center gap-16 md:grid-cols-2 ${shown ? "show" : ""}`}
+          className={`reveal grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16 ${shown ? "show" : ""}`}
         >
           <div className="text-center md:text-left">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-purple-400">
@@ -54,15 +54,15 @@ export default function About() {
             </div>
           </div>
 
-          <div className="grid w-full grid-cols-3 gap-4">
+          <div className="grid w-full grid-cols-3 gap-3 sm:gap-4">
             {stats.map((s, i) => (
               <div
                 key={s.label}
-                className={`reveal glass rounded-2xl p-6 text-center ${shown ? "show" : ""}`}
+                className={`reveal glass rounded-2xl p-4 text-center sm:p-6 ${shown ? "show" : ""}`}
                 style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
               >
-                <p className="mb-2 text-4xl font-black text-gradient">{s.value}</p>
-                <p className="text-sm text-slate-400">{s.label}</p>
+                <p className="mb-2 text-3xl font-black text-gradient sm:text-4xl">{s.value}</p>
+                <p className="text-xs text-slate-400 sm:text-sm">{s.label}</p>
               </div>
             ))}
 

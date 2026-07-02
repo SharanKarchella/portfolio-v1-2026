@@ -28,7 +28,7 @@ export default function Contact() {
   const { ref, shown } = useReveal<HTMLElement>();
 
   return (
-    <section id="contact" ref={ref} className="w-full px-6 py-32">
+    <section id="contact" ref={ref} className="w-full px-6 py-20 md:py-32">
       <div className="container-md text-center">
         <div className={`reveal ${shown ? "show" : ""}`}>
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-purple-400">
@@ -37,7 +37,7 @@ export default function Contact() {
           <h2 className="mb-6 text-4xl font-black leading-tight text-white md:text-6xl">
             Let&apos;s build something <span className="text-gradient">together</span>
           </h2>
-          <p className="mb-12 text-lg leading-[1.8] text-slate-400">
+          <p className="mb-12 text-base leading-[1.8] text-slate-400 sm:text-lg">
             Whether you want to collaborate on a project, have an opportunity, or just want to say hi —
             my inbox is always open.
           </p>
@@ -46,12 +46,12 @@ export default function Contact() {
             href="https://mail.google.com/mail/?view=cm&to=sharanukpersonal@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary mb-16 px-10 py-4 text-lg font-bold"
+            className="btn btn-primary mb-12 px-10 py-4 text-lg font-bold sm:mb-16"
           >
             Say hello ✉️
           </a>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             {socials.map((s, i) => (
               <a
                 key={s.name}
@@ -72,7 +72,7 @@ export default function Contact() {
         </div>
 
         <div
-          className={`reveal mt-24 text-xs text-slate-600 ${shown ? "show" : ""}`}
+          className={`reveal mt-16 text-xs text-slate-600 md:mt-24 ${shown ? "show" : ""}`}
           style={{ transitionDelay: "0.8s" }}
         >
           <p>Built by Sharan Karchella · {new Date().getFullYear()}</p>

@@ -27,9 +27,9 @@ export default function Skills() {
   const { ref, shown } = useReveal<HTMLElement>();
 
   return (
-    <section id="skills" ref={ref} className="w-full px-6 py-32">
+    <section id="skills" ref={ref} className="w-full px-6 py-20 md:py-32">
       <div className="container-xl">
-        <div className={`reveal mb-16 text-center ${shown ? "show" : ""}`}>
+        <div className={`reveal mb-10 text-center md:mb-16 ${shown ? "show" : ""}`}>
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-purple-400">
             Tech stack
           </p>
@@ -59,7 +59,7 @@ export default function Skills() {
           ))}
         </div>
 
-        <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(90px,1fr))]">
+        <div className="grid gap-3 sm:gap-4 [grid-template-columns:repeat(auto-fill,minmax(80px,1fr))]">
           {skills.map((skill, i) => (
             <div
               key={skill.name}

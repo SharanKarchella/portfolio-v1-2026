@@ -57,7 +57,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
     >
       <div className="h-[3px]" style={{ background: project.accent }} />
 
-      <div className="flex flex-1 flex-col p-7">
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
         <div className="mb-4 flex items-start justify-between">
           <span className="text-4xl">{project.emoji}</span>
           {project.featured && (
@@ -96,9 +96,9 @@ export default function Projects() {
   const { ref, shown } = useReveal<HTMLElement>();
 
   return (
-    <section id="projects" ref={ref} className="w-full px-6 py-32">
+    <section id="projects" ref={ref} className="w-full px-6 py-20 md:py-32">
       <div className="container-xl">
-        <div className={`reveal mb-16 text-center ${shown ? "show" : ""}`}>
+        <div className={`reveal mb-10 text-center md:mb-16 ${shown ? "show" : ""}`}>
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-purple-400">
             Portfolio
           </p>
@@ -107,7 +107,7 @@ export default function Projects() {
           </h2>
         </div>
 
-        <div className="grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
+        <div className="grid gap-5 sm:gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
           {projects.map((p, i) => (
             <ProjectCard key={p.title} project={p} i={i} />
           ))}
